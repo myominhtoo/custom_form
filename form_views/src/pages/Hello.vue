@@ -1,3 +1,3 @@
 <template>
-    <h1>Hello I' root pages</h1>
+    <h1 class="">Hello I' root pages</h1>
 </template>

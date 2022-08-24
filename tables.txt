@@ -1,0 +1,55 @@
+#tables
+(1)users
+(2)premium_users
+(3)premium_types
+(4)forms
+(5)form_parts
+(6)answers
+(7)form_part_type
+(8)deleted_forms
+
+(1)users
+-id pk ai
+-username
+-email unique
+-password
+-created_at
+-updated_at
+
+(2)premium_users
+-id pk ai
+-started_date
+-expired_date
+-premium_type_id fk ref premium_types
+-user_id fk ref users
+
+(3)premium_types
+-id pk auto
+-name
+-max_form
+-max_response
+
+(4)forms
+-id pk ai
+-title
+-created_at
+-updated_at
+-user_id
+
+(5)form_parts
+-id pk ai
+-question
+-form_part_type_id fk ref form_types
+-form_id fk ref forms
+
+(6)answers
+-form_id pk ref
+-answer
+-status 
+
+(7)form_part_types
+-id 
+-name
+
+(8)deleted_forms
+...forms && ...form_parts
