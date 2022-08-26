@@ -70,6 +70,12 @@ body
 
 
 /* custom css */
+
+#brand:hover
+{
+    cursor: pointer;
+}
+
 #search-input
 {
     background-color: var(--pale);

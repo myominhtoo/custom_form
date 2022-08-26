@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand bg-snow py-3">
         <main class="container mx-auto w-75">
-            <h1 class="h3 pale-dark">
+            <h1 @click="() => $router.push('/')" id="brand" class="h3 pale-dark">
                 <i class="fa-solid fa-file-waveform violet"></i>
                 Forms
             </h1>
