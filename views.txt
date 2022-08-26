@@ -6,7 +6,7 @@ routes
 - /forms/:id    -> FormPage.vue
 - /form/new     -> FormNewPage.vue
 - /forms/:id/update -> FormUpdatePage.vue
-- /forms/:id/answers -> FormAnswerPage.vue
+- /forms/:id/answers -> FormAnswersPage.vue
 - /forms/:id/responses -> FormResponsesPage.vue
 - /forms/:id/responses/:id -> FormResponsePage.vue
 
