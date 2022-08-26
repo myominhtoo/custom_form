@@ -20,16 +20,12 @@
 </template>
 
 <script setup >
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 
 const search = ref("");
 const submit = ref(null);
 
-
-onMounted(() => {
-    document.title = "Home | Forms";
-});
 
 const handleSubmitClick = () => {
     submit.value.click()

@@ -17,7 +17,12 @@
 </template>
 
 <script setup >
+import { onMounted } from '@vue/runtime-core';
 import Navbar from '../components/Navbar.vue';
 import SmallBox from '../components/SmallBox.vue';
+
+onMounted(() => {
+    document.title = "Home | Forms";
+});
 
 </script>
