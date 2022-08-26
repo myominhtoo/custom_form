@@ -11,7 +11,8 @@
             <ul class="navbar-nav dark gap-5">
                 <ProfileIcon 
                  :user="{
-                    name : 'Jennie'
+                    name : 'Jennie',
+                    email : 'jennie@gmail.com'
                  }"
                  img="nini.jpg"
                 />
