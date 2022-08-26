@@ -10,7 +10,8 @@
                     type="email" 
                     class="w-100"
                     v-model="user.email"
-                    placeholder="Enter email address"/>
+                    placeholder="Enter email address"
+                    autofocus/>
                     <span v-if="error.email.hasError" class="error">{{ error.email.msg }}</span>
                 </FormGroup>
 

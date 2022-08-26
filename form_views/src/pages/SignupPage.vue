@@ -10,7 +10,8 @@
                     type="text" 
                     class="w-100"
                     v-model="user.username"
-                    placeholder="Enter username"/>
+                    placeholder="Enter username"
+                    autofocus/>
                     <span v-if="error.username.hasError" class="error">{{ error.username.msg }}</span>
                 </FormGroup>
 
