@@ -1,5 +1,5 @@
 <template>
-    <form @submit="onSubmit">
+    <form @submit="onSubmit"> 
         <slot/>
     </form>
 </template>
