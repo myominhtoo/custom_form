@@ -1,0 +1,7 @@
+#accounts
+
+- /users (GET) -> List<User>
+  -params
+   (1)id || email
+   
+- /users (POST) -> int ( for creating accont )
