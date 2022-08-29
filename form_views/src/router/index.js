@@ -9,6 +9,7 @@ import FormUpdatePage from '../pages/FormUpdatePage.vue';
 import FormAnswersPage from '../pages/FormAnswersPage.vue';
 import FormResponsesPage from '../pages/FormResponsesPage.vue';
 import FormResponsePage from '../pages/FormResponsePage.vue';
+import ProfilePage from '../pages/ProfilePage.vue';
 
 const routes = [
     {
@@ -50,6 +51,10 @@ const routes = [
     {
         path : "/forms/:id/responses/:resId",
         component : FormResponsePage
+    },
+    {
+        path : "/me",
+        component : ProfilePage
     }
 ]
 
