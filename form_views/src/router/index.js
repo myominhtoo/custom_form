@@ -10,6 +10,7 @@ import FormAnswersPage from '../pages/FormAnswersPage.vue';
 import FormResponsesPage from '../pages/FormResponsesPage.vue';
 import FormResponsePage from '../pages/FormResponsePage.vue';
 import ProfilePage from '../pages/ProfilePage.vue';
+import NotFoundPage from '../pages/NotFoundPage.vue';
 
 const routes = [
     {
@@ -55,6 +56,10 @@ const routes = [
     {
         path : "/me",
         component : ProfilePage
+    },
+    {
+        path : "/:catchAll(.*)",
+        component : NotFoundPage
     }
 ]
 
