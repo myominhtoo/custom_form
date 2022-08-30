@@ -6,10 +6,15 @@
     font-family: 'Ubuntu', sans-serif
 }
 
+a:hover{
+    cursor: pointer;
+}
+
 :root
 {
     --snow : rgba(255,255,255,1) !important;
     --pale-dk : rgba(0,0,0,0.75) !important;
+    --dk-fade : rgba(0,0,0,0.75) !important;
     --dark : rgba(0,0,0,1) !important;
     --violet : rgba(107, 33, 219 , 0.86) !important;
     --pale : #eee !important;
@@ -201,4 +206,55 @@ body
 {
     outline:none;
     box-shadow:0 0 3px var(--pale-dk);
+}
+
+#form-header
+{
+    background-color: var(--snow);
+}
+
+#form-main #part
+{
+    background:var(--snow);
+    margin-bottom:50px !important;
+}
+
+#form-main input , #form-header input
+{
+    border: none;
+    /* background: var(--pale); */
+    padding:5px 20px;
+    border-radius: 4px;
+    border-bottom: 1.5px solid var(--violet);
+    transition: 0.3s all;
+}
+
+#form-main input:focus , #form-header input
+{
+    outline:none;
+    background: var(--pale);
+    border-bottom: 3px solid var(--violet);
+}
+
+#form-main #part #part-answer
+{
+    border: none !important;
+    color:var(--dark-fade) !important;
+    margin:5px 0;
+    width:50%;
+    background-color: var(--pale);
+}
+
+#form-main #part #part-answer:focus
+{
+    outline: none !important;
+    border: none !important;
+}
+
+#answer-del-btn
+{
+    margin-left:5px;
+    padding:10px;
+    border-radius: 50%;
+    background: var(--pale);
 }
