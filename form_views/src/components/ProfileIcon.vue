@@ -1,6 +1,6 @@
 <template>
     <div id="profile-icon" class="my-auto d-flex gap-3 align-items-center">
-        <h5 class="h5">{{ user.name }}</h5>
+        <h5 class="h6 fw-bold">{{ user.name }}</h5>
         <div class="dropdown">
             <img 
              :src="'/src/assets/'+img" 

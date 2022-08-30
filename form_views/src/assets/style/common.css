@@ -137,8 +137,8 @@ body
 
 #profile-icon img
 {
-    width:40px  !important;
-    height:40px !important;
+    width:45px  !important;
+    height:45px !important;
     box-shadow: 0 0 0.5px var(--pale-dk);
     border-radius: 50%;
 }
