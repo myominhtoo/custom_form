@@ -12,17 +12,30 @@
                  img="create.png"
                  />
             </div>
+
+            <div v-for=" user in $store.getters.users" :key="user.id">
+                {{ user.username }}
+            </div>
         </div>
     </main>
 </template>
 
 <script setup >
-import { onMounted } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+import { onMounted , ref } from '@vue/runtime-core';
 import Navbar from '../components/Navbar.vue';
 import SmallBox from '../components/SmallBox.vue';
+
+const store = useStore();
 
 onMounted(() => {
     document.title = "Home | Forms";
 });
+
+onMounted(() => {
+    store.dispatch( "getUsers" );
+});
+
+
 
 </script>
