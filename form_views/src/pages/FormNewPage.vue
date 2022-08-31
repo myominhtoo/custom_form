@@ -2,7 +2,7 @@
    <main class="w-auto">
         <Navbar/>
         
-        <div id="main" class="w-75 mx-auto my-5" style="height:300px;">
+        <div id="main" class="w-75 mx-auto my-5">
             <header id="form-header" class="py-5 px-5">
                 <h2 class="h2 violet">Form Title</h2>
                 <input type="text"
@@ -68,11 +68,13 @@
             <br/>
             <br/>
         </div>
+        <Footer />
    </main>
 </template>
 
 <script setup >
 import Navbar from '../components/Navbar.vue';
+import Footer from '../components/Footer.vue';
 import ControlPanel from '../components/form/ControlPanel.vue';
 import { onMounted, onUpdated, reactive , ref } from "@vue/runtime-core";
 import axios from 'axios';
@@ -162,6 +164,7 @@ const handleAddPart = () => {
 
 const handleResetForm = () => {
     formData.parts.splice( 1 );
+    formData.title = "";
 }
 
 const handleSetKey = ( target , e ) => {
