@@ -6,8 +6,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +54,42 @@ public class AccountController
     @PostMapping("/users")
     public int postCreateUser(@RequestBody User user )
     {
-        return accountMapper.save(user);
+        User savedUser = accountMapper.findByEmail( user.getEmail() );
+        int status = 0;
+
+        if( savedUser == null )
+        {
+            status = accountMapper.save( user );
+        }
+
+        return status;
+    }
+
+    @DeleteMapping("/users/{id}")
+    public int deleteUser( @PathVariable("id") int id )
+    {
+        return accountMapper.updateActiveStatus( 0 , id );   
+    }
+
+    @PutMapping("/users/{id}")
+    public int putUpdateUser( @PathVariable("id") int id , @RequestBody User user )
+    {
+        User savedUser = accountMapper.findByEmail( user.getEmail() );
+
+        int status = 0;
+
+        if(  savedUser == null )
+        {
+            status = accountMapper.updateOne( user );
+        }else
+        {
+            if( savedUser.getId() == id )
+            {
+                status = accountMapper.updateOne( user );
+            }
+        }
+        
+        return status;
     }
 
 }
