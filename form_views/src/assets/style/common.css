@@ -20,6 +20,7 @@ a:hover{
     --pale : #eee !important;
     --light: rgba( 255,255,255,0.75) !important;
     --error : rgba(209, 8, 8,0.75) !important;
+    --danger : rgba( 209, 8, 4 , 1 ) !important;
 }
 
 body
@@ -289,4 +290,23 @@ body
 {
     cursor:pointer;
     background-color: var(--pale);
+}
+
+#form-main #form-reset-btn,#form-main #form-create-btn
+{
+   border-radius:4px;
+   padding:5px 10px;
+   color:var(--light);
+   border: none;
+   box-shadow: 0 0 2px var(--dark);
+}
+
+#form-main #form-reset-btn
+{
+    background-color: var(--danger);
+}
+
+#form-main #form-create-btn
+{
+    background-color: var(--violet);
 }

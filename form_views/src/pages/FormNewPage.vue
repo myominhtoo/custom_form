@@ -54,6 +54,10 @@
                       :cur="index"
                       />
                 </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <button @click="handleResetForm" id="form-reset-btn">Reset</button>
+                    <button id="form-create-btn">Create</button>
+                </div>
             </main>
             <br/>
             <br/>
@@ -147,9 +151,9 @@ const handleAddPart = () => {
     } )
 }
 
-onMounted(() => {
-    
-});
 
+const handleResetForm = () => {
+    formData.parts.splice( 1 );
+}
 
 </script>
