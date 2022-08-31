@@ -22,12 +22,12 @@
                          placeholder="Enter question "/>
                          
                          <select v-model="part.type" class="form-select w-25 text-capitalize">
-                            <option disabled selected >Choose type for question</option>
+                            <option disabled selected>Choose type for question</option>
                             <option v-for="partType in partTypes" :key="partType.id" :value="partType.id">{{ partType.name }}</option>
                          </select>
                     </div>
                     <br/>
-                    <div id="part-answers" class="d-flex flex-column gap-3">
+                    <div v-if="part.type != 1" id="part-answers" class="d-flex flex-column gap-3">
                         <div 
                           v-for="answer,idx in part.answers"
                           :key="idx"
@@ -39,13 +39,20 @@
                              :placeholder="'Answer '+(idx+1)" />
                             <!-- index is from parent , idx is child -->
                             <span 
+                             v-if="part.type != 1"
                               @click="handleDeleteAnswer( index , idx )"
                               id="answer-del-btn"><i class="fa-solid fa-trash-can"></i></span>
                         </div>
                     </div>
                     <a 
-                     v-if="part.answers.length < 4 "
+                     v-if="part.answers.length < 4 && part.type != 1 "
                      @click="handleAddOption( index )" class="h6 d-block my-3" >Add Option</a>
+                     <ControlPanel
+                      @add:part="handleAddPart"
+                      @delete:part="handleDeletePart"
+                      :isLast=" index == (formData.parts.length - 1)"
+                      :cur="index"
+                      />
                 </div>
             </main>
             <br/>
@@ -56,7 +63,7 @@
 
 <script setup >
 import Navbar from '../components/Navbar.vue';
-import Control from '../components/creation/Control.vue';
+import ControlPanel from '../components/form/ControlPanel.vue';
 import { onMounted, reactive , ref } from "@vue/runtime-core";
 import axios from 'axios';
 
@@ -121,6 +128,23 @@ const handleDeleteAnswer = ( questionIdx , answerIdx ) => {
 
     formData.parts[questionIdx].answers.splice( answerIdx , 1 );
 
+}
+
+const handleDeletePart = ( target ) => {
+   if( formData.parts.length > 1){
+    formData.parts.splice( target , 1 );
+   }
+}
+
+const handleAddPart = () => {
+    let prevParts = formData.parts;
+    formData.parts.push( {
+        id : prevParts[prevParts.length - 1] + 1,
+        type : 1,
+        title : "",
+        answers : [],
+        key : ""      
+    } )
 }
 
 onMounted(() => {

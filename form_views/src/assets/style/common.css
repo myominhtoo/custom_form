@@ -258,3 +258,35 @@ body
     border-radius: 50%;
     background: var(--pale);
 }
+
+#part
+{
+    position: relative;
+}
+
+#control-panel
+{
+    position: absolute;
+    border-radius:3px;
+    box-shadow: 0 0 1px var(--pale-dk);
+    background-color: var(--snow) !important;
+    width:5% !important;
+
+    right:-100px;
+    top:30px;
+}
+
+#control-panel i
+{
+    font-size:20px !important;
+    color:var(--violet);
+    padding:10px;
+    border-radius:50%;
+    transition:0.5s all;
+}
+
+#control-panel i:hover
+{
+    cursor:pointer;
+    background-color: var(--pale);
+}
