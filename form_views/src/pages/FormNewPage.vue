@@ -75,6 +75,7 @@ import ControlPanel from '../components/form/ControlPanel.vue';
 import { onMounted, onUpdated, reactive , ref } from "@vue/runtime-core";
 import axios from 'axios';
 import { useStore } from 'vuex';
+import useAlert from '../composable/utils/useAlert.js';
 
 
 const store = useStore();
@@ -87,20 +88,20 @@ onMounted(() => {
     store.dispatch( "getPartTypes" );
 });
 
-const partTypes = ref([
-    {
-        id : 1,
-        name : "text"
-    },
-    {
-        id : 2,
-        name : "radio"
-    },
-    {
-        id : 3,
-        name : "checkbox"
-    }
-]);
+// const partTypes = ref([
+//     {
+//         id : 1,
+//         name : "text"
+//     },
+//     {
+//         id : 2,
+//         name : "radio"
+//     },
+//     {
+//         id : 3,
+//         name : "checkbox"
+//     }
+// ]);
 
 const formData = reactive({
     title : "Untitled title",
@@ -140,19 +141,43 @@ const handleDeleteAnswer = ( questionIdx , answerIdx ) => {
 
 const handleDeletePart = ( target ) => {
    if( formData.parts.length > 1){
-    formData.parts.splice( target , 1 );
+    
+     let curPosition = window.scrollY;
+
+     window.scrollTo( 0 , curPosition - 300 );
+
+     formData.parts.splice( target , 1 );
+
+     return ;
    }
+
+   useAlert( "warning" , {
+    text : "A form must not under 1 question!!"
+   } );
 }
 
 const handleAddPart = () => {
     let prevParts = formData.parts;
-    formData.parts.push( {
-        id : prevParts[prevParts.length - 1] + 1,
-        type : 1,
-        title : "",
-        answers : [],
-        key : ""      
-    } )
+    let curPosition = window.scrollY;
+
+    if( formData.parts.length < 10 )
+    {
+        window.scrollTo( 0  , curPosition + 500 );
+
+        formData.parts.push( {
+            id : prevParts[prevParts.length - 1] + 1,
+            type : 1,
+            title : "",
+            answers : [],
+            key : ""      
+        } )
+
+        return ;
+    }
+
+    useAlert( "warning" , {
+        text : "You need to buy premium to do!!"
+    });
 }
 
 
