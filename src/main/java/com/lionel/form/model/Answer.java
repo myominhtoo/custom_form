@@ -7,5 +7,5 @@ public class Answer
 {
     private int id;
     private String answer;
-    private int status;    
+    private boolean status;    
 }

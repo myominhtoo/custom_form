@@ -9,4 +9,5 @@ public class PremiumType
     private String name;
     private int maxForm;
     private int maxResponse;
+    private Long price;
 }
