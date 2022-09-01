@@ -23,18 +23,15 @@
                          
                          <select v-model="part.type" class="form-select w-25 text-capitalize">
                             <option disabled selected>Choose type for question</option>
-                            <option v-for="partType in partTypes" :key="partType.id" :value="partType.id">{{ partType.name }}</option>
+                            <option v-for="partType in $store.getters.partTypes" :key="partType.id" :value="partType.id">{{ partType.name }}</option>
                          </select>
                     </div>
                     <br/>
                     <div v-if="part.type != 1" id="part-answers" class="d-flex flex-column gap-3">
-                        <div 
-                          v-for="answer,idx in part.answers"
-                          :key="idx"
-                          class="w-auto d-flex align-items-center gap-2">
+                        <div v-for="answer,idx in part.answers" :key="idx" class="w-auto d-flex align-items-center gap-2">
                             <input 
                               @change="(e) => handleSetKey( index , e )"
-                              :type="partTypes.filter( type => type.id == part.type )[0].name"
+                              :type="$store.getters.partTypes.filter( type => type.id == part.type )[0].name"
                               name="key"
                               :value="answer.id"
                               class="form-check violet" />
@@ -50,9 +47,8 @@
                               id="answer-del-btn"><i class="fa-solid fa-trash-can"></i></span>
                         </div>
                     </div>
-                    <a 
-                     v-if="part.answers.length < 4 && part.type != 1 "
-                     @click="handleAddOption( index )" class="h6 d-block my-3" >Add Option</a>
+                    <a v-if="part.answers.length < 4 && part.type != 1 "
+                      @click="handleAddOption( index )" class="h6 d-block my-3" >Add Option</a>
                      <ControlPanel
                       @add:part="handleAddPart"
                       @delete:part="handleDeletePart"
@@ -78,9 +74,17 @@ import Footer from '../components/Footer.vue';
 import ControlPanel from '../components/form/ControlPanel.vue';
 import { onMounted, onUpdated, reactive , ref } from "@vue/runtime-core";
 import axios from 'axios';
+import { useStore } from 'vuex';
+
+
+const store = useStore();
 
 onMounted(() => {
     document.title = "New | Forms";
+});
+
+onMounted(() => {
+    store.dispatch( "getPartTypes" );
 });
 
 const partTypes = ref([
@@ -105,22 +109,12 @@ const formData = reactive({
             id : 1,
             type : 1,
             title : "",
-            answers : [/* {
-                id : 1,
-                value : "",
-            } */],
-            key : null,
-        },
-        {
-            id : 2,
-            type : 1,
-            title : "",
-            answers : [ {
+            answers : [{
                 id : 1,
                 value : "",
             } ],
-            key : null,
-        }
+            key : [],
+        },
     ]
 });
 
@@ -172,19 +166,23 @@ const handleSetKey = ( target , e ) => {
 
     if( curType == 2 )
     {
-        formData.parts[target].key = e.target.value;
+        formData.parts[target].key.splice(0);
+        formData.parts[target].key.push( e.target.value );
     }
 
     if( curType == 3 )
     {
-        let curKeys = formData.parts[target].key;
+        let curKeys = formData.parts[target].key;//datas before now
+        let val = e.target.value;//checked value
 
-       if( curKeys == null )
-       {
-         formData.parts[target].key = [];
-       }
+        if( curKeys.includes( val ))
+        {
+            let savedIdx = curKeys.findIndex(( v ) => v  == val );
+            curKeys.splice( savedIdx , 1 );//if haved included , will remove
 
-       formData.parts[target].key.push( e.target.value );
+            return ;
+        }
+        curKeys.push( val );
     }
 }
 

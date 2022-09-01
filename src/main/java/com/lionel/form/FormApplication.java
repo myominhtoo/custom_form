@@ -12,7 +12,6 @@ import com.lionel.form.mapper.AccountMapper;
 @MapperScan("com.lionel.form.mapper")
 public class FormApplication
 {
-
 	public static void main(String[] args) {
 		SpringApplication.run(FormApplication.class, args);
 	}

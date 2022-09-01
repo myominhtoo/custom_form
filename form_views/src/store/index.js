@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import User from './module/User.js';
+import Form from './module/Form.js';
 
 export default createStore({
     state : {
@@ -12,6 +13,7 @@ export default createStore({
 
     },
     modules : {
-        User
+        User,
+        Form
     }
 });
