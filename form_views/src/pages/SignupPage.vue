@@ -45,7 +45,7 @@
                     <span v-if="error.confirm.hasError" class="error">{{ error.confirm.msg }}</span>
                 </FormGroup>
 
-                <button type="submit" class="btn w-100 btn-primary snow bold my-2">REGISTER</button>
+                <button type="submit" class="btn w-100 btn-primary snow bold my-2">{{ isRegistering ? "Registering..." : "Register"}}</button>
                 
                 <div class="text-center py-2">
                     <router-link to="/signin" class="h6">Already registered?</router-link>
@@ -59,10 +59,20 @@
 import Form  from '../components/Form.vue';
 import FormGroup from '../components/FormGroup.vue';
 import FormContainer from '../components/FormContainer.vue';
-import { onMounted } from "@vue/runtime-core";
+import { onMounted , ref } from "@vue/runtime-core";
 import user from '../composable/data/user.js'
 import error from '../composable/data/userError.js';
 import validate from '../composable/utils/userValidate.js';
+import check from '../composable/utils/userErrorCheck.js';
+import bind from '../composable/utils/bindError.js';
+import userReset from '../composable/utils/userReset.js';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
+const isRegistering = ref( false );
+const store = useStore();
+
+const router = useRouter();
 
 onMounted(() => {
     document.title = "SignUp | Forms";
@@ -70,6 +80,35 @@ onMounted(() => {
 
 const handleSignUp = ( e ) => {
     e.preventDefault();
+
+    check( "username" , validate(user.username) );
+    check( "email" , validate(user.email) )
+    check( "password" , validate(user.password) );
+    check( "confirm" , validate(user.confirm) );
+
+    if( user.confirm != user.password && user.confirm != "" && user.password != "" ){
+        let msg = { hasError : true , msg : "Password must be same with confirm-password!" };
+        error.password = msg;
+        error.confirm = msg;
+    }
+
+    if( bind().OK ){
+        isRegistering.value = true;
+        
+        store.dispatch( "addUser" , {
+            username : user.username , 
+            email : user.email,
+            password : user.password,
+            role_id : 1
+        } ).then( () => {
+            isRegistering.value = false;
+            userReset();
+            router.push( { path :"/signin" , query : { "msg" : "Successfully Registered!" , "error" : false } } );
+
+        })
+
+    }
+
 
 }
 

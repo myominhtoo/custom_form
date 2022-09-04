@@ -4,6 +4,8 @@
             <Form :onSubmit="handleSignIn">
                 <h3 class="h3 text-center mb-4 violet">SIGN IN YOUR ACCOUNT</h3>
 
+                <h6 v-if="$route.query.msg != undefined" :class="{ error : $route.query.error == 'true' ? true : false, success : $route.query.error == 'true' ? false : true }" class="h6 text-center my-2">{{ $route.query.msg }}</h6>
+
                 <FormGroup>
                     <label for="" class="form-label my-1">Email</label>
                     <input 

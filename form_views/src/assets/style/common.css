@@ -21,6 +21,7 @@ a:hover{
     --light: rgba( 255,255,255,0.75) !important;
     --error : rgba(209, 8, 8,0.75) !important;
     --danger : rgba( 209, 8, 4 , 1 ) !important;
+    --success : rgba(13, 105, 36,0.75)  !important;
 }
 
 body
@@ -85,6 +86,11 @@ body
 {
     color:var(--error);
     font-size:15px !important;
+    font-weight: bold;
+}
+
+.success{
+    color:var(--success);
     font-weight: bold;
 }
 

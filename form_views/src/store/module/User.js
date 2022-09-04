@@ -23,6 +23,15 @@ export default {
             const res = await axios.get('http://localhost:8080/api/users');
             
             commit("setUsers",res.data);
+        },
+
+        async addUser( { dispatch } , user ){
+            const res = await axios.post( `http://localhost:8080/api/users`, user );
+
+            if( res.data == 1){
+                dispatch("getUsers");
+            }
+
         }
     }
 }
