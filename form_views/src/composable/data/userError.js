@@ -22,3 +22,10 @@ export default reactive({
         msg : "",
     }
 });
+
+export const getError = ( msg = "" , hasError = false ) => {
+    return {
+        msg,
+        hasError
+    }
+}

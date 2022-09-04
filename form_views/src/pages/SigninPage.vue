@@ -27,7 +27,7 @@
                     <span v-if="error.password.hasError" class="error">{{ error.password.msg }}</span>
                 </FormGroup>
 
-                <button type="submit" class="btn w-100 btn-primary snow bold my-2">LOGIN</button>
+                <button type="submit" :class="{ disabled : isLoggingIn ? true : false }" class="btn w-100 btn-primary snow bold my-2">{{ isLoggingIn ? "Logging..." : "Login" }}</button>
                 
                 <div class="text-center py-2">
                     <router-link to="/signup" class="h6">Create account?</router-link>
@@ -41,10 +41,21 @@
 import Form  from '../components/Form.vue';
 import FormGroup from '../components/FormGroup.vue';
 import FormContainer from '../components/FormContainer.vue';
-import { onMounted } from "@vue/runtime-core";
+import { onMounted, ref } from "@vue/runtime-core";
 import user from '../composable/data/user.js'
 import error from '../composable/data/userError.js';
+import { getError } from '../composable/data/userError.js';
 import validate from '../composable/utils/userValidate.js';
+import check from '../composable/utils/userErrorCheck.js';
+import bind from '../composable/utils/bindError.js';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
+
+const store = useStore();
+const router = useRouter();
+
+const isLoggingIn = ref( false );
 
 
 onMounted(() => {
@@ -53,6 +64,39 @@ onMounted(() => {
 
 const handleSignIn = ( e ) => {
     e.preventDefault();
+
+    check( "email" , validate( user.email) );
+    check( "password" , validate( user.password ) );
+
+    if( bind().OK ){
+        
+        isLoggingIn.value = true;
+        store.dispatch( "getUser" , user.email )
+        .then( () => {
+            
+            isLoggingIn.value = false;
+
+            const savedUser = store.getters.user;
+
+            if( savedUser.id == undefined ){
+
+                error.email = getError( "Invalid email or password!" , true );
+                error.password = getError( "Invalid email or password!" , true );
+
+            }else{
+                if( savedUser.password == user.password ){
+                    error.email = getError( "" , false );
+                    error.password = getError( "" , false );
+
+                    router.push( { path : "/" , query : { msg : "Successfully Logged In!" } } );
+                }
+                else{
+                    error.email = getError( "Invalid email or password!" , true );
+                    error.password = getError( "Invalid email or password!" , true );
+                }
+            }
+        })
+    }
 
 }
 

@@ -4,6 +4,7 @@ export default {
     state : {
         users : [],
         msg : "Hello world",
+        user : {},
     },
     getters : {
         users( state ){
@@ -11,11 +12,20 @@ export default {
         },
         msg( state ){
             return state.msg;
+        },
+        user( state ){
+            return state.user;
         }
     },
     mutations : {
         setUsers( state , payload ){
             state.users = payload ;
+        },
+        setUser( state , payload ){
+            state.user = payload;
+        },
+        addUser( state , payload ){
+            state.users.push( payload );
         }
     },
     actions : {
@@ -25,13 +35,23 @@ export default {
             commit("setUsers",res.data);
         },
 
-        async addUser( { dispatch } , user ){
+        async addUser( { commit , dispatch } , user ){
             const res = await axios.post( `http://localhost:8080/api/users`, user );
 
             if( res.data == 1){
-                dispatch("getUsers");
+                commit( 'addUser' , user );
             }
 
+        },
+
+        async getUser( { commit } , key ){
+            const res = await axios.get(`http://localhost:8080/api/users?email=${key}`);
+
+            const users = res.data;
+
+            if( users.length > 0 ){
+                commit( "setUser" , users[0]);
+            }
         }
     }
 }
