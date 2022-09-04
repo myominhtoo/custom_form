@@ -8,4 +8,5 @@ public class Answer
     private int id;
     private String answer;
     private boolean status;    
+    private int formPartId;
 }
