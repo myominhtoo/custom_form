@@ -35,12 +35,14 @@ public class FormController
     @Autowired
     AnswerMapper answerMapper;
 
+    //for getting form types
     @GetMapping( "/forms/parts/types" )
     public List<FormPartType> getFormPartTypes()
     {
         return formPartTypeMapper.find();
     }
 
+    //for creating form
     @PostMapping( value = "/forms" )
     public HttpResponse postCreateForm( @RequestBody Form form )
     {
@@ -50,4 +52,6 @@ public class FormController
         
         return response;
     }
+
+
 }
