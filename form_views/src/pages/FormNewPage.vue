@@ -74,6 +74,7 @@ import Footer from '../components/Footer.vue';
 import ControlPanel from '../components/form/ControlPanel.vue';
 import { onMounted, onUpdated, reactive , ref } from "@vue/runtime-core";
 import axios from 'axios';
+import generateFormId from '../composable/utils/form/generateFormId.js';
 import { useStore } from 'vuex';
 import useAlert from '../composable/utils/useAlert.js';
 
@@ -86,6 +87,9 @@ onMounted(() => {
 
 onMounted(() => {
     store.dispatch( "getPartTypes" );
+
+    formData.id = generateFormId();
+    formData.formParts[0].id = `${formData.id}-1`;
 });
 
 // const partTypes = ref([
@@ -104,11 +108,11 @@ onMounted(() => {
 // ]);
 
 const formData = reactive({
-    id : 1,
+    id : '',
     title : "Untitled title",
     formParts : [
         {
-            id : '1-1',
+            id : ``,
             type : 1,
             question : '',
             answers : [],
@@ -247,6 +251,10 @@ const handleSetKey = ( target , e ) => {
         }
         curKeys.push( val );
     }
+
+
+
 }
+
 
 </script>
