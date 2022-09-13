@@ -11,11 +11,11 @@ import com.lionel.form.model.FormPart;
 @Mapper
 public interface FormPartMapper {
     
-    @Insert("INSERT INTO form_parts ( question , form_part_type_id , form_id ) VALUES "
+    @Insert("<script>INSERT INTO form_parts ( id ,  question , form_part_type_id , form_id ) VALUES "
             +"<foreach item='part' collection='parts' separator=',' close=';' >"
-            +" ( #{part.question} , #{part.formPartTypeId} , #{part.formId} ) "
+            +" ( #{part.id} ,  #{part.question} , #{part.formPartTypeId} , #{part.formId} ) "
             +"</foreach>"
-            +"")
+            +"</script>")
     int saveAll( @Param("parts") List<FormPart> parts );
 
 }

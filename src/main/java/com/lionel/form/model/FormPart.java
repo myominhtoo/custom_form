@@ -10,6 +10,6 @@ public class FormPart
     private String id;// to be used as composite key formId + num
     private String question;
     private int formPartTypeId;
-    private int formId;    
+    private String formId;    
     private List<Answer> answers;
 }

@@ -9,6 +9,7 @@ public class HttpResponse {
     
     private int statusCode;
     private HttpStatus status;
-    private String message;
+    private String msg;
+    private boolean ok;
 
 }

@@ -4,16 +4,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.lionel.form.model.Answer;
 
 @Mapper
 public interface AnswerMapper {
     
-    @Insert("INSERT INTO answers ( form_part_id , answer , status ) VALUES "
-            +"<foreach item='answer' collection='answers' separator=',' close=';'>"
-            +" ( #{answer.formPartId} , #{answer.answer} , #{answer.status} ) "
-            +"</foreach>")
-    int saveAll( List<Answer> answers );
+    @Insert("<script>"
+            +" INSERT INTO answers( id , answer , status , form_part_id ) VALUES "
+            +"<foreach item='ans' collection='answers' separator=',' close=';' >"
+            +" ( #{ans.id} , #{ans.answer} , #{ans.status} , #{ans.formPartId} ) "
+            +"</foreach>"
+            +"</script>")
+    int saveAll( @Param("answers") List<Answer> answers );
 
 }

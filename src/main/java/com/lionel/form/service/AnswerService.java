@@ -14,7 +14,7 @@ public class AnswerService {
     @Autowired
     private AnswerMapper answerMapper;
 
-    public boolean save( List<Answer> answers ){
+    public boolean saveAll( List<Answer> answers ){
         boolean isSaved = false;
 
         if( answerMapper.saveAll( answers ) > 0 ){

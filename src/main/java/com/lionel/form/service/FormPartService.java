@@ -15,7 +15,7 @@ public class FormPartService
     @Autowired
     private FormPartMapper formPartMapper;
 
-    public boolean save( List<FormPart> parts ){
+    public boolean saveAll( List<FormPart> parts ){
         boolean isSaved = false;
         
         if( formPartMapper.saveAll(parts) > 0 ){

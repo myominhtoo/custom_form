@@ -118,28 +118,31 @@ const formData = reactive({
             answers : [],
             key : [],
         },
-    ]
+    ],
+    userId : 1
 });
 
 
-const handleCreateForm = () => {
+const handleCreateForm = async () => {
 
     swal({
         text : 'Are you sure to create form?',
         icon : 'warning',
         buttons : ['No','Yes'],
-    }).then( isYes => {
+    }).then( async (isYes) => {
         if( isYes ){
            
             formData.formParts = formData.formParts.map( part => {
                 part.answers = part.answers.map( answer => {
                     let status = part.key.includes( `${answer.id}` ) ? true : false;
-                    return { answer : answer.value , formPartId : part.id , status };
+                    return { id : answer.id , answer : answer.value , formPartId : part.id , status };
                 })
-                return { ...part , formPartTypeId : part.type };
+                return { ...part , formPartTypeId : part.type , formId :formData.id };
             })
 
-            console.log( formData )
+           const res = await axios.post(`http://localhost:8080/api/forms` , formData );
+           console.log( res.data );
+        // console.log(formData)
 
         }
     });

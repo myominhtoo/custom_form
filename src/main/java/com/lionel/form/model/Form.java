@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Form
 {
-    private int id;
+    private String id;
     private String title;
     private int userId;
     private List<FormPart> formParts;
