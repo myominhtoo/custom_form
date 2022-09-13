@@ -8,6 +8,6 @@ import com.lionel.form.model.Form;
 @Mapper
 public interface FormMapper
 {
-    @Insert("INSERT INTO forms ( title , user_id ) VALUE ( #{title} , #{user_id} )")
+    @Insert("INSERT INTO forms ( id ,  title , user_id ) VALUE ( #{id} , #{title} , #{user_id} )")
     int save( Form form );
 }

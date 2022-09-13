@@ -134,7 +134,7 @@ const handleCreateForm = () => {
             formData.formParts = formData.formParts.map( part => {
                 part.answers = part.answers.map( answer => {
                     let status = part.key.includes( `${answer.id}` ) ? true : false;
-                    return { ...answer , formPartId : part.id , status };
+                    return { answer : answer.value , formPartId : part.id , status };
                 })
                 return { ...part , formPartTypeId : part.type };
             })
