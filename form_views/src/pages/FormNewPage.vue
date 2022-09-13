@@ -12,12 +12,12 @@
             </header>
 
             <main id="form-main" class="my-4">
-                <div v-for="part,index in formData.parts" :key="part.id" id="part" class="py-5 px-5">
+                <div v-for="part,index in formData.formParts" :key="part.id" id="part" class="py-5 px-5">
                     <h4 class="h5 violet my-2">({{ index + 1 }})Question</h4>
                     <div class="w-100 mx-auto d-flex gap-3">
                         <input
                          type="text"
-                         v-model="part.title" 
+                         v-model="part.question" 
                          class="w-100 mx-auto"
                          placeholder="Enter question "/>
                          
@@ -52,13 +52,13 @@
                      <ControlPanel
                       @add:part="handleAddPart"
                       @delete:part="handleDeletePart"
-                      :isLast=" index == (formData.parts.length - 1)"
+                      :isLast=" index == (formData.formParts.length - 1)"
                       :cur="index"
                       />
                 </div>
                 <div class="d-flex justify-content-end gap-2">
                     <button @click="handleResetForm" id="form-reset-btn">Reset</button>
-                    <button id="form-create-btn">Create</button>
+                    <button @click="handleCreateForm" id="form-create-btn">Create</button>
                 </div>
             </main>
             <br/>
@@ -104,30 +104,64 @@ onMounted(() => {
 // ]);
 
 const formData = reactive({
+    id : 1,
     title : "Untitled title",
-    parts : [
+    formParts : [
         {
-            id : 1,
+            id : '1-1',
             type : 1,
-            title : "",
-            answers : [{
-                id : 1,
-                value : "",
-            } ],
+            question : '',
+            answers : [],
             key : [],
         },
     ]
 });
 
+
+const handleCreateForm = () => {
+
+    swal({
+        text : 'Are you sure to create form?',
+        icon : 'warning',
+        buttons : ['No','Yes'],
+    }).then( isYes => {
+        if( isYes ){
+           
+            formData.formParts = formData.formParts.map( part => {
+                part.answers = part.answers.map( answer => {
+                    let status = part.key.includes( `${answer.id}` ) ? true : false;
+                    return { ...answer , formPartId : part.id , status };
+                })
+                return { ...part , formPartTypeId : part.type };
+            })
+
+            console.log( formData )
+
+        }
+    });
+
+}
+
+
 const handleAddOption = ( target ) => { 
 
-    let prevAnswers = formData.parts[target].answers;
+    let prevAnswers = formData.formParts[target].answers;
+    let chars = [];
+    /**
+     *  chars = [1,12]
+     * will take 12 
+     * 
+     */
+
+    if( prevAnswers.length > 0 ) chars = prevAnswers[ prevAnswers.length -1 ].id.split('-');
+    
+    let id = prevAnswers.length == 0 
+             ? `${formData.formParts[target].id}-1`
+             : `${formData.formParts[target].id}-${Number(chars[ chars.length -1 ]) + 1}`; 
 
     if( prevAnswers.length < 4 ){
-        let lastId = prevAnswers[prevAnswers.length - 1 ];
-        let cur = lastId == null ? 1 : ( lastId.id + 1);
-        formData.parts[target].answers.push({
-            id : cur,
+        formData.formParts[target].answers.push({
+            id : `${id}`,
             value : "",
         });
     }
@@ -135,18 +169,18 @@ const handleAddOption = ( target ) => {
 
 const handleDeleteAnswer = ( questionIdx , answerIdx ) => {
 
-    formData.parts[questionIdx].answers.splice( answerIdx , 1 );
+    formData.formParts[questionIdx].answers.splice( answerIdx , 1 );
 
 }
 
 const handleDeletePart = ( target ) => {
-   if( formData.parts.length > 1){
+   if( formData.formParts.length > 1){
     
      let curPosition = window.scrollY;
 
      window.scrollTo( 0 , curPosition - 300 );
 
-     formData.parts.splice( target , 1 );
+     formData.formParts.splice( target , 1 );
 
      return ;
    }
@@ -157,19 +191,23 @@ const handleDeletePart = ( target ) => {
 }
 
 const handleAddPart = () => {
-    let prevParts = formData.parts;
+    let prevParts = formData.formParts;
     let curPosition = window.scrollY;
 
-    if( formData.parts.length < 10 )
+    if( formData.formParts.length < 10 )
     {
         window.scrollTo( 0  , curPosition + 500 );
 
-        formData.parts.push( {
-            id : prevParts[prevParts.length - 1] + 1,
+        let chars = prevParts[prevParts.length - 1].id.split('-');
+        let prevId = Number(chars[chars.length - 1]);
+        let id = `${formData.id}-${prevId + 1}`;
+
+        formData.formParts.push( {
+            id ,
             type : 1,
-            title : "",
+            question : '',
             answers : [],
-            key : ""      
+            key : [],      
         } )
 
         return ;
@@ -182,22 +220,22 @@ const handleAddPart = () => {
 
 
 const handleResetForm = () => {
-    formData.parts.splice( 1 );
+    formData.formParts.splice( 1 );
     formData.title = "";
 }
 
 const handleSetKey = ( target , e ) => {
-    const curType = formData.parts[target].type;
+    const curType = formData.formParts[target].type;
 
     if( curType == 2 )
     {
-        formData.parts[target].key.splice(0);
-        formData.parts[target].key.push( e.target.value );
+        formData.formParts[target].key.splice(0);
+        formData.formParts[target].key.push( e.target.value );
     }
 
     if( curType == 3 )
     {
-        let curKeys = formData.parts[target].key;//datas before now
+        let curKeys = formData.formParts[target].key;//datas before now
         let val = e.target.value;//checked value
 
         if( curKeys.includes( val ))

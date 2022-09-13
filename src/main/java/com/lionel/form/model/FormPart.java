@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class FormPart
 {
-    private int id;
+    private String id;// to be used as composite key formId + num
     private String question;
     private int formPartTypeId;
     private int formId;    

@@ -10,9 +10,9 @@ import com.lionel.form.model.Answer;
 @Mapper
 public interface AnswerMapper {
     
-    @Insert("INSERT INTO answers ( form_id , answer , status ) VALUES "
+    @Insert("INSERT INTO answers ( form_part_id , answer , status ) VALUES "
             +"<foreach item='answer' collection='answers' separator=',' close=';'>"
-            +" ( #{answer.formId} , #{answer.answer} , #{answer.status} ) "
+            +" ( #{answer.formPartId} , #{answer.answer} , #{answer.status} ) "
             +"</foreach>")
     int saveAll( List<Answer> answers );
 

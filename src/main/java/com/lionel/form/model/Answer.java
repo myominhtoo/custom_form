@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Answer
-{
-    private int id;
+{ 
+    private String id;// to be used composite key formId + formPartId
     private String answer;
     private boolean status;    
     private int formPartId;
